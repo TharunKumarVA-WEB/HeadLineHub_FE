@@ -1,7 +1,7 @@
 
 
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 import { FaBars } from "react-icons/fa";
@@ -14,6 +14,23 @@ import Telugu from "./component/Telugu/Telugu";
 
 function App() {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
 
   return (
     <Router>
@@ -27,11 +44,22 @@ function App() {
         }}
       >
         {/* Navigation Bar */}
-        <Navbar expand="lg" className="container fixed-top bg-black-50">
+        <Navbar
+      expand="lg"
+      className="container fixed-top"
+      style={{
+        backgroundColor: isScrolled ? "rgb(114, 116, 230)" : "transparent",
+        transition: "background-color 0.3s ease",
+      }}
+    >
           <div className="row align-items-center justify-content-between w-100">
             {/* HeadlineHub */}
             <div className="col-6 p-1 h1 m-2 text-center text-md-left">
-              <Link to="/" style={{ textDecoration: "none", color: "white" }}>
+              <Link to="/" style={{
+            textDecoration: "none",
+            color: isScrolled ? "black" : "white", // Change text color based on scroll
+            transition: "color 0.3s ease",
+          }}>
                 HeadlineHub
               </Link>
             </div>

@@ -1,22 +1,13 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import NewsItem from "../English/NewsItem";
+import React from "react";
+
+
+import English from "../English/English";
 
 
 
 
-const English = () => {
-  const [news, setNews] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get("https://headlinehub-be.onrender.com/api/news")
-      .then((response) => {
-        console.log("API Response:", response.data);
-        setNews(response.data.data || []); // Corrected to match API response structure
-      })
-      .catch((error) => console.error("Error fetching news:", error));
-  }, []);
+const Home = () => {
+ 
 
   return (
 
@@ -31,16 +22,9 @@ const English = () => {
   </marquee>
 </div>
       </div>
-      <h1>Latest News</h1>
-      {Array.isArray(news) && news.length > 0 ? (
-        news.map((article) => (
-          <NewsItem key={article.uuid} article={article} />
-        ))
-      ) : (
-        <p>No news available.</p>
-      )}
+<English />
     </div>
   );
 };
 
-export default English;
+export default Home;
